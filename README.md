@@ -43,3 +43,53 @@ Le framework s'appuie sur **CrewAI** pour orchestrer un pipeline séquentiel où
 1. L'infrastructure globale est lancée en arrière-plan :
    ```bash
    docker compose up -d
+
+
+# 🗺️ AI-Driven Urban Mobility Analytics Framework
+
+## 📋 Aperçu du Projet
+
+| Métrique / Info | Description |
+| :--- | :--- |
+| **Description** | Un framework de Data Science modulaire et local qui automatise l'extraction de données de transit (API/SQL) et orchestre un système d'agents intelligents (CrewAI + LLM local) pour générer des notes stratégiques d'urbanisme à destination des décideurs publics. |
+| **Stack Technique** | Python 3.11, PostgreSQL, CrewAI, Ollama (Qwen2.5-7B), YAML, Markdown/Obsidian |
+| **Architecture** | Pipeline découplé à deux étages : Moteur de calcul agentique + Générateur de rendu visuel via cache |
+| **Méthodologie** | Cadrage STAR (Situation, Task, Action, Result), Philosophie de développement épurée (Style CLAUDE.md) |
+
+---
+
+## 🎯 Problématisation Business (Méthode STAR)
+
+### 📌 Situation
+Les cabinets de conseil en aménagement et les municipalités manquent d'outils agiles pour corréler les données de mobilité douce en temps réel (flux sportifs, micro-mobilité) avec les besoins réels d'infrastructure de voirie, limitant l'efficacité des investissements publics.
+
+### 🎯 Task
+Développer un framework automatisé de bout en bout capable d'extraire des indicateurs de transit géospatiaux, d'isoler les axes routiers saturés ou sous-dimensionnés, et de formuler des recommandations d'infrastructure actionnables sous forme de synthèses exécutives.
+
+### 🛠️ Action
+1. **Infrastructure Locale Isolée :** Déploiement d'une stack de calcul souveraine via Docker (PostgreSQL et LLM `qwen2.5:7b` embarqué localement via Ollama sur CPU).
+2. **Pipeline Découplé & Cache :** Création d'une architecture Python modulaire (`main.py` CLI) séparant la logique lourde d'extraction/analyse (sauvegardée en JSON avec archivage historique) de la logique de restitution graphique instantanée.
+3. **Orchestration Multi-Agents :** Configuration d'une équipe d'agents spécialisés (CrewAI) guidés par des contraintes comportementales strictes de concision et de pertinence (Zéro hallucination).
+
+### 📈 Result
+* **Zéro coût de Run :** Inférence 100% locale sans dépendance aux API cloud payantes.
+* **Flexibilité Visuelle :** Changement de template et génération de livrables Markdown (Obsidian) en < 0.1 seconde grâce au système de cache (`--cached`), évitant de recalculer la logique métier.
+* **Livrables à Forte Valeur Ajoutée :** Production automatique de notes stratégiques intégrant l'analyse critique des limites de données (biais d'échantillonnage) et des feuilles de route futures.
+
+---
+
+## 🏗️ Architecture du Code
+
+Le framework est conçu pour être universel et s'adapter à plusieurs bases de données ou cas d'usage simplement en injectant un nouveau fichier de configuration YAML.
+
+```text
+ai-lab-workspace/
+├── config/
+│   └── urban_mobility.yml  # Accès BDD, définitions et contraintes des agents
+├── templates/
+│   └── layout_star_urban.txt # Moule visuel au format Markdown (Obsidian)
+├── src/
+│   ├── __init__.py
+│   ├── pipeline.py         # Logique lourde CrewAI + Sauvegarde cache JSON
+│   └── renderer.py         # Hydratation instantanée du template choisi
+└── main.py                 # Point d'entrée unique de l'application (CLI)
